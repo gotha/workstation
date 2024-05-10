@@ -1,0 +1,9 @@
+---
+- name: Install nvim plugins
+  hosts: "{{ hosts | default('localhost') }}"
+  tasks:
+    - name: Install package manager
+      command: git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+
+    - name: Install plugins
+      command: nvim -u ~/.config/nvim/bootstrap.lua +PackerSync +qall

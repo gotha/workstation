@@ -71,6 +71,7 @@ resource "libvirt_domain" "domain" {
     autoport    = true
   }
 
+
   provisioner "remote-exec" {
     inline = [
       "echo 'Hello World'"
@@ -85,11 +86,19 @@ resource "libvirt_domain" "domain" {
     }
   }
 
-  provisioner "local-exec" {
-    command = <<EOT
-      echo "local-exec command"
-      EOT
+  provisioner "file" {
+    source = "./config/ansible"
+    destination = "/home/${var.ssh_username}"
+
+    connection {
+      type        = "ssh"
+      user        = var.ssh_username
+      host        = libvirt_domain.domain.network_interface[0].addresses[0]
+      private_key = file(var.ssh_private_key)
+      timeout     = "5m"
+    }
   }
+
 }
 
 

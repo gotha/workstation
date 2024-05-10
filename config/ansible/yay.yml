@@ -1,0 +1,25 @@
+---
+- name: Install yay
+  hosts: "{{ hosts | default('localhost') }}"
+  tasks:
+    - name: Clone yay
+      command: git clone https://aur.archlinux.org/yay.git /tmp/yay 
+
+    - name: Install
+      shell:
+        chdir: /tmp/yay
+        cmd: makepkg -si --noconfirm
+
+    - name: Update packages
+      command: yay -Syu --noconfirm
+
+    - name: Install new packages
+      command: |
+        yay -S --noconfirm \
+          1password \
+          discord \
+          google-chrome \
+          slack-desktop \
+          spotify \
+          vale \
+          wob

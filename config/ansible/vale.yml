@@ -1,0 +1,9 @@
+---
+- name: Install vale
+  hosts: "{{ hosts | default('localhost') }}"
+  tasks:
+    - name: Install
+      command: yay -S --noconfirm vale
+
+    - name: Configure
+      command: vale sync

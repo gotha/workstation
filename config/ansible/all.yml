@@ -1,0 +1,6 @@
+---
+- import_playbook: packages.yml
+- import_playbook: yay.yml
+- import_playbook: dotfiles.yml
+- import_playbook: vale.yml
+- import_playbook: nvim.yml

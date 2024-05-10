@@ -1,0 +1,17 @@
+---
+- name: Install dotfiles
+  hosts: "{{ hosts | default('localhost') }}"
+  tasks:
+    - name: Prepare dirs
+      command: mkdir -p $HOME/Projects/gotha
+
+    - name: Download
+      command: git clone https://github.com/gotha/dotfiles.git ~/Projects/gotha/dotfiles
+
+    - name: Install stow 
+      command: yay -S --noconfirm stow
+
+    - name: Create symlinks
+      shell:
+        chdir: ~/Projects/gotha/dotfiles
+        cmd: stow -t ~ .

@@ -3,67 +3,27 @@
 # examples:
 # https://cloudinit.readthedocs.io/en/latest/topics/examples.html
 runcmd:
-  - pacman -Syu --noconfirm
-  - systemctl enable --now docker
-  - [su, ${ssh_username}, -c, "systemctl --user enable --now pulseaudio"]
-  - [su, ${ssh_username}, -c, "cd /tmp && git clone https://aur.archlinux.org/yay.git"]
-  - [su, ${ssh_username}, -c, "cd /tmp/yay && makepkg -si --noconfirm"]
-  - [su, ${ssh_username}, -c, "yay -Syu --noconfirm"]
-  - [su, ${ssh_username}, -c, "yay -S --noconfirm 1password discord google-chrome slack-desktop spotify vale wob"]
-  - [su, ${ssh_username}, -c, "cd $HOME && git clone https://github.com/gotha/dotfiles.git && cd dotfiles && stow -t ~ ."]
-  - [su, ${ssh_username}, -c, "git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim"]
-  - [su, ${ssh_username}, -c, "nvim -u ~/.config/nvim/bootstrap.lua +PackerSync +qall"]
-  - [su, ${ssh_username}, -c, "vale sync"]
   - echo "This is from runcmd end"
 ssh_pwauth: false
 disable_root: true
 users:
   - name: ${ssh_username}
     sudo: "ALL=(ALL) NOPASSWD:ALL"
-    groups: [users, admin, docker]
+    groups: [users, admin]
     shell: /bin/zsh
     lock_passwd: true
     ssh_authorized_keys:
       - ${ssh_public_key}
-packages:
-  - base-devel
-  - git
-  - docker
-  - docker-compose
-  - less
-  - ncdu
-  - neovim 
-  - nodejs
-  - npm
-  - tmux
-  - ttf-firacode-nerd
-  - unzip
-  - vi
-  - vim
-  - wget
-  - zip
-  - zsh
-  - alacritty
-  - eog
-  - firefox
-  - noto-fonts-emoji
-  - pavucontrol
-  - polkit
-  - pulseaudio
-  - rofi
-  - rofi-emoji
-  - stow
-  - sway
-  - swaybg
-  - swayidle
-  - swaylock
-  - thunar
-  - vlc
-  - waybar
-  - wl-clipboard
-  - xorg-xwayland
 growpart:
   mode: auto
   devices: ["/"]
-
+packages:
+  - ansible
+  - base-devel
+  - git
+  - less
+  - vi
+  - vim
+  - wget
+  - zsh
 final_message: "The system is finally up, after $UPTIME seconds"
