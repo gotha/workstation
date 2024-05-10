@@ -3,7 +3,7 @@ provider "libvirt" {
 }
 
 resource "libvirt_volume" "base" {
-  name   = "base"
+  name   = "${var.vm_hostname}-base"
   pool   = "default"
   source = var.disk_img_url
   format = "qcow2"
