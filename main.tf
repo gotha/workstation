@@ -74,7 +74,7 @@ resource "libvirt_domain" "domain" {
 
   provisioner "remote-exec" {
     inline = [
-      "echo 'Hello World'"
+      "echo 'ssh connection ready'"
     ]
 
     connection {
@@ -95,7 +95,22 @@ resource "libvirt_domain" "domain" {
       user        = var.ssh_username
       host        = libvirt_domain.domain.network_interface[0].addresses[0]
       private_key = file(var.ssh_private_key)
-      timeout     = "5m"
+      timeout     = "1m"
+    }
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "cloud-init status --wait",
+      "ansible-playbook ~/ansible/all.yml"
+    ]
+
+    connection {
+      type        = "ssh"
+      user        = var.ssh_username
+      host        = libvirt_domain.domain.network_interface[0].addresses[0]
+      private_key = file(var.ssh_private_key)
+      timeout     = "30m"
     }
   }
 
