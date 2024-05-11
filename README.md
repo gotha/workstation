@@ -15,9 +15,24 @@ terraform apply -var vm_hostname=vm_host
 
 ## Manual install from ISO
 
-Install Archlinux following the instructions from [the official guide](https://wiki.archlinux.org/title/installation_guide) and/or use the [cheatsheet](./README-arch.md)
+Boot from install ISO.
+
+Download install configuration file:
+
+```sh
+curl https://raw.githubusercontent.com/gotha/workstation/main/config/archinstall/user_configuration.json > /tmp/user_configuration.json
+archinstall --config /tmp/user_configuration.json
+```
+
+Setup disk partitioning (and user if you need to), finish the installation and restart.
 
 ```sh
 git clone https://github.com/gotha/workstation.git
 ansible-playbook ./workstation/config/ansible/all.yml
+```
+
+Set default shell to zsh (note: .zprofile is used to start sway):
+
+```sh
+chsh -s /usr/bin/zsh gotha
 ```
