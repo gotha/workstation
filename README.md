@@ -1,5 +1,11 @@
 # Workstation
 
+Setup ArchLinux install for every day work (uses sway, rofi, waybar for UI).
+
+Comes in VM and bare metal install variants thanks to ansible playbooks.
+
+Uses [dotfiles](https://github.com/gotha/dotfiles)
+
 ## Create VM with terraform
 
 ```sh
@@ -13,5 +19,5 @@ Install Archlinux following the instructions from [the official guide](https://w
 
 ```sh
 git clone https://github.com/gotha/workstation.git
-ansible-playbook workspace/config/ansible/all.yml
+ansible-playbook ./workstation/config/ansible/all.yml
 ```
